@@ -1,12 +1,11 @@
 import { useState } from "react";
 
 const App = (props) => {
-  const [name, setName] = useState(props.name);
-  const [price, setPrice] = useState(props.price);
+  const [state, setState] = useState(props);
+  const { name, price } = state;
 
   const reset = () => {
-    setName(props.name);
-    setPrice(props.price);
+    setState(props);
   };
 
   return (
@@ -14,10 +13,14 @@ const App = (props) => {
       <p>
         現在の{name}は、{price}です
       </p>
-      <button onClick={() => setPrice(price + 1)}>+1</button>
-      <button onClick={() => setPrice(price - 1)}>-1</button>
+      <button onClick={() => setState({ ...state, price: price + 1 })}>
+        +1
+      </button>
       <button onClick={reset}>reset</button>
-      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <input
+        value={name}
+        onChange={(e) => setState({ ...state, name: e.target.value })}
+      />
     </>
   );
 };
