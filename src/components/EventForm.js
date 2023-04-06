@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
+import AppContext from "../contexts/AppContext";
 
-const EventForm = ({ state, dispatch }) => {
+const EventForm = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+
+  const { state, dispatch } = useContext(AppContext);
 
   const addEvent = (e) => {
     e.prventDefault();
