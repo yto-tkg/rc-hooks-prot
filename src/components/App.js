@@ -7,6 +7,7 @@ import Events from "./Events";
 const App = (props) => {
   const initialState = {
     events: [],
+    operationLogs: [],
   };
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -16,6 +17,7 @@ const App = (props) => {
         <div>
           <EventForm />
           <Events />
+          <OperationLogs />
         </div>
       </AppContext.Provider>
     </>

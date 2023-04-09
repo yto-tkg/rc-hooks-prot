@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useState } from "react";
 import AppContext from "../contexts/AppContext";
+import { timeCurrentIso8601 } from "../utils";
 
 const EventForm = () => {
   const [title, setTitle] = useState("");
@@ -11,6 +12,13 @@ const EventForm = () => {
   const addEvent = (e) => {
     e.prventDefault();
     dispatch({ type: "CREATE_EVENT", title, body });
+
+    dispatch({
+      type: "ADD_OPERATION_LOG",
+      description: "イベントを作成しました",
+      operatedAt: timeCurrentIso8601(),
+    });
+
     setTitle("");
     setBody("");
   };
@@ -18,6 +26,18 @@ const EventForm = () => {
   const deleteAllEvent = (e) => {
     e.prventDefault();
     dispatch({ type: "DELETE_ALL_EVENT" });
+    dispatch({
+      type: "DELETE_ALL_OPERATION_LOG",
+      description: "すべてのイベントを削除しました",
+      operatedAt: timeCurrentIso8601(),
+    });
+  };
+
+  const deleteAllOperationLogs = (e) => {
+    e.prventDefault();
+    dispatch({
+      type: "DELETE_ALL_OPERATION_LOG",
+    });
   };
 
   return (
@@ -48,6 +68,12 @@ const EventForm = () => {
             disabled={state.events.length === 0 ? true : false}
           >
             すべてのイベントを削除
+          </button>
+          <button
+            onClick={deleteAllOperationLogs}
+            disabled={state.operationLogs.length === 0 ? true : false}
+          >
+            すべて操作ログを削除
           </button>
         </div>
       </form>
